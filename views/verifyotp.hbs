@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        outline: none;
+        border: none;
+
+        transition: all 0.3s linear;
+    }
+
+    nav {
+        background-color: black;
+        width: 100%;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+
+
+    }
+
+    nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        gap: 20%;
+
+    }
+
+    nav .navbar .logo {
+        height: 4rem;
+    }
+
+    nav .navbar .logo img {
+        height: 100%;
+    }
+
+    nav .navbar .welcome {
+        color: aliceblue;
+        padding: 1rem 0 0 0;
+
+    }
+
+    nav .navbar .welcome h1 {
+        padding: 0.2rem;
+    }
+
+    .signup {
+        margin: 4rem 7% 0 7%;
+        background-color: #ffff;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem 5rem;
+        display: flex;
+        gap: 20%;
+    }
+
+    .signup .form form {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .signup .formimage .user {
+        margin: 2.7rem;
+    }
+
+    .signup .formimage .user a {
+        color: black;
+    }
+
+    .signup .form .form-group {
+        margin: 0.5rem;
+        border-bottom: 0.1rem solid black;
+    }
+
+    .signup .form .form-group-captcha {
+        margin: 0.5rem;
+    }
+
+    .signup .form .form-group input {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+
+
+    .signup .form button {
+        margin-top: 4rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+        width: 80%;
+        font-size: 1rem;
+        padding: 0.7rem;
+        background-color: black;
+        color: aliceblue;
+        cursor: pointer;
+
+
+    }
+
+    @media(max-width:772px) {
+        nav .navbar {
+            margin: 0 7% 0 7%;
+            display: flex;
+            gap: 5%;
+
+
+        }
+
+        nav .navbar .welcome {
+            color: aliceblue;
+            padding: 1rem 0 0 0;
+
+        }
+
+        nav .navbar .welcome h1 {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .signup {
+            margin: 4rem 7% 0 7%;
+            background-color: #ffff;
+            box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 20%;
+        }
+
+        .signup .formimage .user {
+            margin: 1.5rem;
+        }
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0am7JwZjFtABYBY9-ejGUvMmPeKL9NYQ",
+            authDomain: "brainbulb-3684c.firebaseapp.com",
+            projectId: "brainbulb-3684c",
+            storageBucket: "brainbulb-3684c.appspot.com",
+            messagingSenderId: "1097965500133",
+            appId: "1:1097965500133:web:a1b81e3f2c5765fd45c60c",
+            measurementId: "G-62CS8TKS3K"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+
+        const appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+
+        // Handle OTP verification form submission
+        $("#otp-verification-form").submit(function (e) {
+            e.preventDefault();
+
+            const otp = $("input[name='otp']").val();
+
+            // Use Firebase to verify OTP
+            const verificationId = $("input[name='verificationid']").val();
+            const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, otp);
+
+            firebase.auth().signInWithCredential(credential)
+                .then(userCredential => {
+                    // OTP is verified successfully
+                    alert("OTP verified successfully!");
+                    submitFormData();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Failed to verify OTP." + error.message);
+                });
+
+        });
+
+        // Function to submit form data
+        function submitFormData() {
+            const mobileNumber = $("input[name='mobileNumber']").val();
+
+
+            $.ajax({
+                type: "POST",
+                url: "/auth/verifyotp",
+                data: JSON.stringify({ mobileNumber: mobileNumber }),
+                contentType: "application/json",
+                success: function (response) {
+                    //alert("mobile number updated");
+                    // Redirect to the verify OTP page
+                    window.location.href = `/`;
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert("Failed to save user data." + error.message);
+                },
+            });
+        }
+
+    });
+
+
+</script>
+
+<body>
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                <img src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414492/logo_xepkgt.png" alt="">
+            </div>
+            <div class="welcome">
+                <h1>welcome to the brainbulb</h1>
+            </div>
+        </div>
+    </nav>
+    <div class="signup">
+        <div class="form">
+            <h1>Sign Up</h1>
+            <form id="otp-verification-form">
+                <div class="form-group">
+                    <p>OTP sent to {{mobileNumber}}</p>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="otp" placeholder="Enter OTP" required>
+                    <input type="hidden" name="mobileNumber" value="{{mobileNumber}}">
+                    <input type="hidden" name="verificationid" value="{{verificationId}}">
+                </div>
+                <div class="form-group-captcha">
+                    <div id="recaptcha-container"></div>
+                </div>
+
+                <button value="submit">verify otp</button>
+
+
+            </form>
+
+        </div>
+        <div class="formimage">
+            <img src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg" alt="">
+            <div class="user">
+                <a href="/login">
+                    <p>I am already a user of brainbulb</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+
+<style>
+    * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        outline: none;
+        border: none;
+
+        transition: all 0.3s linear;
+    }
+
+    a {
+        color: black;
+    }
+
+    body {
+        background-color: #eee;
+    }
+
+    #img {
+        height: 5rem;
+        width: 5rem;
+        border-radius: 50%;
+    }
+
+    #imgk {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+    }
+
+    #imgk1 {
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+    }
+
+    nav {
+        background-color: black;
+        width: 100%;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        top: 0;
+        position: sticky;
+        z-index: 1;
+
+
+    }
+
+    nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    nav .navbar .logo {
+        height: 4rem;
+        display: flex;
+    }
+
+    nav .navbar .logo i {
+        color: #fff;
+        padding-top: 1.6rem;
+        font-size: 1.4rem;
+        display: none;
+    }
+
+
+    nav .navbar .logo img {
+        height: 100%;
+    }
+
+    nav .navbar .welcome {
+
+        padding: 1rem 0 0 0;
+
+
+    }
+
+    nav .navbar .welcome ul {
+        display: flex;
+        padding: 0.2rem;
+    }
+
+    nav .navbar .welcome ul a {
+        list-style: none;
+        padding: 0.7rem;
+        text-decoration: none;
+        color: aliceblue;
+
+    }
+
+    nav .navbar .welcome form {
+        margin: 0.7rem 0rem;
+
+
+    }
+
+    nav .navbar .welcome form input {
+        padding: 0.3rem 1rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+    }
+
+    nav .navbar .welcome form button {
+        background-color: black;
+        padding: 0 0.3rem;
+    }
+
+    nav .navbar .welcome form button i {
+        color: aliceblue;
+        cursor: pointer;
+    }
+
+    .body  form {
+        padding: 2rem;
+    }
+
+    .body  form input {
+        padding-bottom: 0.6rem;
+    }
+
+    .form-group {
+        margin: 1.5rem 0;
+        border-bottom: 0.1rem solid black;
+    }
+
+    .body  form button {
+        margin-top: 1rem;
+        border: 0.1rem solid black;
+        border-radius: 0.5rem;
+        width: fit-content;
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        background-color: black;
+        color: aliceblue;
+        cursor: pointer;
+
+
+    }
+
+    .body {
+        margin: 2rem auto;
+    }
+
+    .body  {
+        background-color: #fff;
+        width: 50%;
+        border-radius: 0.5rem;
+    }
+    .mobile-navbar {
+        display: none;
+    }
+    .searchresult,.no-results{
+        margin-left: 2rem;
+        font-size: 1rem;
+        display: none;
+    }
+     .searchresult h1{
+        font-size: 1.2rem;
+     }
+     table{
+        display: none;
+     }
+     .searchresultpdf{
+        margin: 0.7rem 0.5rem;
+     }
+      .searchresultpdf table th,td{
+         padding: 0.4rem 1.5rem;
+      }
+
+
+
+    @media(max-width:772px) {
+        nav .navbar .welcome {
+            display: none;
+        }
+
+        nav .navbar .logo i {
+            display: block;
+        }
+
+        .mobile-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem;
+
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .body  {
+            width: 90%;
+        }
+
+        .body .userpost .post .userinput form {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+        }
+         .searchresultpdf table th,td{
+         padding: 0.4rem 1rem;
+      }
+       .searchresultpdf table th{
+        font-size: 1rem;
+       }
+
+
+       
+
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-bars" id="menubars" onclick="togglefunction()" onmouseleave="removetoggle()"></i>
+                <img src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414492/logo_xepkgt.png" alt="">
+            </div>
+            <div class="welcome">
+                <ul>
+                    <a href="/">
+                        <li>home</li>
+                    </a>
+                    <a href="/searchpdf">
+                        <li>searchnotes</li>
+                    </a>
+                    <a href="/upload">
+                        <li>uploadnotes</li>
+                    </a>
+                </ul>
+            </div>
+            <div class="welcome">
+                <ul>
+                    <a href="">
+                        <li><img id="imgk" src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg" alt=""></li>
+                    </a>
+                    <a href="/v2/{{username}}">
+                        <li>{{username}}</li>
+                    </a>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="body">
+
+        <div class="search-box">
+
+            <form action="/v3/search" method="get" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for=""><i class="fa-solid fa-book"></i></label>
+                    <input type="text" name="subjectname" placeholder="enter subject name" required>
+                </div>
+                <button type="submit">Search</button>
+            </form>
+
+        </div>
+        <div class="searchresult" style="display: {{displayResultsx}};">
+            <h1>Search Results</h1>
+
+        </div>
+        <div class="no-results" style="display: {{displayResultsx}};">It seems there are no document uploaded for
+            your
+            searchquery</div>
+        <div class="searchresult" style="display: {{displayResults}};">
+            <h1>Search Results</h1>
+
+        </div>
+        <div class="searchresultpdf">
+            <div class="table">
+                <table style="display: {{displayResults}};">
+                    <thead>
+                        <tr>
+                         
+                            <th>Subject</th>
+                            <th>Uploader Name</th>
+                            <th>Download Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each formattedResults}}
+                        <tr>
+                         
+                            <td>{{this.subjectname}}</td>
+                            <td>{{this.uploadedBy}}</td>
+                            <td><a href="{{this.pdf}}" style="color: var(--black)">Download</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="mobile-navbar">
+        <a href="/" class="nav-item"><i class="fa-solid fa-house"></i></a>
+        <a href="/searchpdf" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="/upload" class="nav-item"><i class="fa-solid fa-file-arrow-up"></i></a>
+        <a href="/v2/{{username}}" class="nav-item"><i class="fa-solid fa-user"></i></a>
+    </div>
+
+</body>
+
+</html>

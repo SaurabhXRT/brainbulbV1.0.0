@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        outline: none;
+        border: none;
+
+        transition: all 0.3s linear;
+    }
+
+    a {
+        color: black;
+    }
+
+    body {
+        background-color: #eee;
+    }
+
+    #img {
+        height: 5rem;
+        width: 5rem;
+        border-radius: 50%;
+    }
+
+    #imgk {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+    }
+
+    #imgk1 {
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+    }
+
+    nav {
+        background-color: black;
+        width: 100%;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        top: 0;
+        position: sticky;
+        z-index: 1;
+
+
+    }
+
+    nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+     nav .navbar .logo {
+        height: 4rem;
+        display: flex;
+    }
+
+       nav .navbar .logo i {
+        color: #fff;
+        padding-top: 1.6rem;
+        font-size: 1.4rem;
+        display: none;
+    }
+
+
+    nav .navbar .logo img {
+        height: 100%;
+    }
+
+    nav .navbar .welcome {
+
+        padding: 1rem 0 0 0;
+
+
+    }
+
+    nav .navbar .welcome ul {
+        display: flex;
+        padding: 0.2rem;
+    }
+
+    nav .navbar .welcome ul a {
+        list-style: none;
+        padding: 0.7rem;
+        text-decoration: none;
+        color: aliceblue;
+
+    }
+
+    nav .navbar .welcome form {
+        margin: 0.7rem 0rem;
+
+
+    }
+
+    nav .navbar .welcome form input {
+        padding: 0.3rem 1rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+    }
+
+    nav .navbar .welcome form button {
+        background-color: black;
+        padding: 0 0.3rem;
+    }
+
+    nav .navbar .welcome form button i {
+        color: aliceblue;
+        cursor: pointer;
+    }
+
+    .body {
+        display: flex;
+        justify-content: space-between;
+        margin: 2rem 7%;
+    }
+
+    .body .userpost {
+        background-color: #fff;
+        width: 40%;
+        border-radius: 0.5rem;
+    }
+
+    .body .userpost .post {
+        margin: 1.5rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+
+    }
+
+    .body .userpost .post .userimage {
+        display: flex;
+        justify-content: center;
+        /* Center horizontally */
+        align-items: center;
+
+    }
+
+    .body .userpost .post .userinput form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .body .userpost .post .userinput form input,
+    textarea,
+    button {
+        padding: 0.6rem;
+        margin: 0.6rem;
+    }
+
+    .feed {
+        margin: 1.5rem;
+    }
+
+    .feed-1 {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .feed-1 li {
+        list-style-type: none;
+        font-size: 1rem;
+    }
+
+    .feed-3 {
+        margin-top: 0.8rem;
+    }
+
+    .feed-2 {
+        height: 15rem;
+        width: 100%;
+        margin-top: 0.8rem;
+
+    }
+
+    .feed-2 img {
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    .feedpost {
+        margin-top: 1rem;
+        border-top: 0.1rem solid black;
+        padding-top: 1.5rem;
+    }
+
+    .nonconnections {
+        margin: 1.5rem;
+    }
+
+    .connecteduser {
+        margin: 1.5rem;
+    }
+
+   .connecteduser-1 {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+
+    .nonconnections-1 {
+        display: flex;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 0.1rem solid black;
+    }
+
+    .nonconnection-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border: 0.1rem solid black;
+        border-radius: 0.6rem;
+        margin-left: 1rem;
+    }
+
+    .nonconnection-2 li {
+        list-style-type: none;
+    }
+
+    .mobile-navbar {
+        display: none;
+    }
+
+    .connectionstatus {
+        margin: 1.5rem;
+        width: fit-content;
+    }
+
+    .connectionstatus p {
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+    }
+
+    .button-x {
+        margin: 1.5rem ;
+        padding: 0.5rem 0;
+        border-top: 0.1rem solid black;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .button-x button {
+        color: #fff;
+        background-color: black;
+        border-radius: 0.5rem;
+        cursor: pointer;
+    }
+
+
+    @media(max-width:772px) {
+        nav .navbar .welcome {
+            display: none;
+        }
+
+        nav .navbar .logo i {
+            display: block;
+        }
+
+        .mobile-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem;
+
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .body .userpost {
+            width: 100%;
+        }
+
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        // Handle the click event of the "Accept" button
+        $(".accept-button").click(function () {
+            const button = $(this); // Store a reference to the button element
+            const userId = button.data("userid");
+
+            // Send an AJAX request to accept the connection request
+            $.ajax({
+                url: `/v2/accept/${userId}`,
+                type: "POST",
+                success: function (response) {
+                    // Handle the success response, e.g., display a message to the user
+                    alert(response.message);
+
+                    // Optionally, you can remove or hide the accepted user's section from the page
+                    button.closest(".connecteduser-1").remove();
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                    alert("Error accepting the connection.");
+                },
+            });
+        });
+    });
+     document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".button-x button");
+        const connectedUserSection = document.querySelector(".connecteduser");
+        const postSection = document.querySelector(".feed");
+
+        // Initial setup: Hide the connections and pending request sections
+        connectedUserSection.style.display = "none";
+      
+        buttons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const buttonClicked = this.textContent.toLowerCase();
+
+                // Hide all sections
+                connectedUserSection.style.display = "none";
+                postSection.style.display = "none";
+
+                // Display the selected section
+                if (buttonClicked === "{{otherUserConnectionStatus.length}}connections") {
+                    connectedUserSection.style.display = "block";
+                } else if (buttonClicked === "{{otherUserPosts.length}}posts") {
+                    postSection.style.display = "block";
+                }
+            });
+        });
+    });
+
+
+</script>
+
+<body>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                  <i class="fas fa-bars" id="menubars" onclick="togglefunction()" onmouseleave="removetoggle()"></i>
+                <img src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414492/logo_xepkgt.png" alt="">
+            </div>
+            <div class="welcome">
+                <ul>
+                    <a href="/">
+                        <li>home</li>
+                    </a>
+                    <a href="/searchpdf">
+                        <li>searchnotes</li>
+                    </a>
+                    <a href="/upload">
+                        <li>uploadnotes</li>
+                    </a>
+                </ul>
+            </div>
+
+            <div class="welcome">
+                <ul>
+                    <a href="">
+                        <li><img id="imgk"
+                                src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg"
+                                alt=""></li>
+                    </a>
+                    <a href="/v2/{{username}}">
+                        <li>{{username}}</li>
+                    </a>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="body">
+        <div class="userpost">
+            <div class="post">
+                <div class="userimage">
+                    <img id="img"
+                        src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg"
+                        alt="">
+                </div>
+                <div class="userinput">
+                    <p>{{otherUser.username}}</p>
+                </div>
+
+            </div>
+            <div class="connectionstatus">
+                {{#if isConnected}}
+                <p> Connected</p>
+                {{else if hasPendingRequest}}
+                <p> Pending Connection Request</p>
+                {{else if hasSentConnectionRequest}}
+                <p> Connection Request Sent</p>
+                {{else}}
+                <p> Not Connected</p>
+                {{/if}}
+            </div>
+            <div class="button-x">
+                <button>{{otherUserPosts.length}}posts</button>
+                <button>{{otherUserConnectionStatus.length}}connections</button>
+
+            </div>
+            <div class="connecteduser">
+
+
+                {{#each otherUserConnectionStatus}}
+                <div class="connecteduser-1">
+                    <div class="connecteduser-2">
+                        <img id="imgk"
+                            src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg"
+                            alt="">
+                    </div>
+                    <div class="connecteduser-3">
+                        {{#if currentuserisConnected}}
+
+                        <a href="/v2/{{this.userId.username}}">
+                            <p>{{this.userId.username}}</p>
+                        </a>
+                        <p>its you</p>
+                        {{else}}
+                        <a href="/v1/{{this.userId.username}}">
+                            <p>{{this.userId.username}}</p>
+                        </a>
+                        {{/if}}
+
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+
+
+
+
+            <div class="feed">
+                {{#each otherUserPosts}}
+                <div class="feedpost">
+                    <div class="feed-1">
+                        <div class="feed-user">
+                            <img id="imgk"
+                                src="https://res.cloudinary.com/dar4ws6v6/image/upload/v1695414549/signup-image_h1h1oy.jpg"
+                                alt="">
+                        </div>
+                        <div class="feed-username">
+                            <li>{{this.author.username}}</li>
+                            <li>{{timeago createdAt}}</li>
+                        </div>
+
+                    </div>
+                    <div class="feed-3">
+                        <p>{{this.text}}</p>
+                    </div>
+                    <div class="feed-2">
+                        <img src="{{this.image}}" alt="">
+                    </div>
+
+                </div>
+                {{/each}}
+            </div>
+
+        </div>
+        <div class="brainbulbthings">
+
+        </div>
+    </div>
+     <div class="mobile-navbar">
+        <a href="/" class="nav-item"><i class="fa-solid fa-house"></i></a>
+        <a href="/searchpdf" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="/upload" class="nav-item"><i class="fa-solid fa-file-arrow-up"></i></a>
+        <a href="/v2/{{username}}" class="nav-item"><i class="fa-solid fa-user"></i></a>
+    </div>
+
+
+</body>
+
+</html>

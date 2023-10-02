@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        outline: none;
+        border: none;
+
+        transition: all 0.3s linear;
+    }
+
+    nav {
+        background-color: black;
+        width: 100%;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        
+
+    }
+
+    nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        gap: 20%;
+
+    }
+
+    nav .navbar .logo {
+        height: 4rem;
+    }
+
+    nav .navbar .logo img {
+        height: 100%;
+    }
+
+    nav .navbar .welcome {
+        color: aliceblue;
+        padding: 1rem 0 0 0;
+
+    }
+
+    nav .navbar .welcome h1 {
+        padding: 0.2rem;
+    }
+
+    .signup {
+        margin: 4rem 7% 0 7%;
+        background-color: #ffff;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem 5rem;
+        display: flex;
+        gap: 20%;
+    }
+
+    .signup .form form {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+
+    }
+     .signup .formimage .user{
+        margin: 2.7rem;
+     }
+      .signup .formimage .user a{
+        color: black;
+      }
+
+    .signup .form .form-group {
+        margin: 0.5rem;
+        border-bottom: 0.1rem solid black;
+    }
+
+    .signup .form .form-group input {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+
+
+    .signup .form button {
+        margin-top: 4rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+        width: 80%;
+        font-size: 1rem;
+        padding: 0.7rem;
+        background-color: black;
+        color: aliceblue;
+        cursor: pointer;
+
+
+    }
+    @media(max-width:772px) {
+          nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        gap: 5%;
+       
+
+    }
+     nav .navbar .welcome {
+        color: aliceblue;
+        padding: 1rem 0 0 0;
+
+    }
+      nav .navbar .welcome h1 {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+     .signup {
+        margin: 4rem 7% 0 7%;
+        background-color: #ffff;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem ;
+        display: flex;
+        flex-direction: column;
+        gap: 20%;
+    }
+      .signup .formimage .user{
+        margin: 1.5rem;
+     }
+    }
+</style>
+
+<body>
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="">
+            </div>
+            <div class="welcome">
+                <h1>welcome to the brainbulb</h1>
+            </div>
+        </div>
+    </nav>
+    <div class="signup">
+        <div class="form">
+            <h1>Sign in</h1>
+            <form action="/auth/signin" method="post">
+                <div class="form-group">
+                    <label for=""><i class="fa-solid fa-user"></i></label>
+                    <input type="text" name="username" placeholder="enter username">
+                </div>
+
+                <div class="form-group">
+                    <label for=""><i class="fa-solid fa-lock"></i></label>
+                    <input type="text" name="password" placeholder="enter password">
+                </div>
+             
+                <button value="submit">Login</button>
+
+
+            </form>
+
+        </div>
+        <div class="formimage">
+            <img src="signin-image.jpg" alt="">
+            <div class="user">
+                <a href="/signup"><p>I am not a user of brainbulb</p></a>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

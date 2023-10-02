@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<script>
+    $(document).ready(function () {
+        // Handle the click event of the "Connect" button
+        $(".connect-button").click(function () {
+            const button = $(this); // Store a reference to the button element
+            const userId = button.data("userid");
+
+            // Check if the button is disabled (prevents multiple clicks)
+            if (button.prop("disabled")) {
+                return;
+            }
+
+            // Send an AJAX request to initiate the connection request
+            $.ajax({
+                url: "/v1/connect",
+                type: "POST",
+                data: { userId },
+                success: function (response) {
+                    // Handle the success response
+                    alert(response.message);
+
+                    // Update the button text to "Pending" and disable the button
+                    button.text("Pending");
+                    button.prop("disabled", true);
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                    alert("Error connecting to the user.");
+                },
+            });
+        });
+    });
+
+
+</script>
+<style>
+    * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        outline: none;
+        border: none;
+
+        transition: all 0.3s linear;
+    }
+
+    a {
+        color: black;
+    }
+
+    body {
+        background-color: #eee;
+    }
+
+    #img {
+        height: 5rem;
+        width: 5rem;
+        border-radius: 50%;
+    }
+
+    #imgk {
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+    }
+
+    #imgk1 {
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+    }
+
+    nav {
+        background-color: black;
+        width: 100%;
+        box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 0.1);
+        top: 0;
+        position: sticky;
+        z-index: 1;
+
+
+    }
+
+    nav .navbar {
+        margin: 0 7% 0 7%;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    nav .navbar .logo {
+        height: 4rem;
+        display: flex;
+    }
+
+    nav .navbar .logo i {
+        color: #fff;
+        padding-top: 1.6rem;
+        font-size: 1.4rem;
+        display: none;
+    }
+
+
+    nav .navbar .logo img {
+        height: 100%;
+    }
+
+    nav .navbar .welcome {
+
+        padding: 1rem 0 0 0;
+
+
+    }
+
+    nav .navbar .welcome ul {
+        display: flex;
+        padding: 0.2rem;
+    }
+
+    nav .navbar .welcome ul a {
+        list-style: none;
+        padding: 0.7rem;
+        text-decoration: none;
+        color: aliceblue;
+
+    }
+
+    nav .navbar .welcome form {
+        margin: 0.7rem 0rem;
+
+
+    }
+
+    nav .navbar .welcome form input {
+        padding: 0.3rem 1rem;
+        border: 0.1rem solid black;
+        border-radius: 1rem;
+    }
+
+    nav .navbar .welcome form button {
+        background-color: black;
+        padding: 0 0.3rem;
+    }
+
+    nav .navbar .welcome form button i {
+        color: aliceblue;
+        cursor: pointer;
+    }
+
+    .body {
+        display: flex;
+        justify-content: space-between;
+        margin: 2rem 7%;
+    }
+
+    .body .userpost {
+        background-color: #fff;
+        width: 40%;
+        border-radius: 0.5rem;
+    }
+
+    .body .userpost .post {
+        margin: 1.5rem;
+        display: flex;
+        gap: 1rem;
+
+    }
+
+    .body .userpost .post .userimage {
+        display: flex;
+        justify-content: center;
+        /* Center horizontally */
+        align-items: center;
+
+    }
+
+    .body .userpost .post .userinput form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .body .userpost .post .userinput form input,
+    textarea,
+    button {
+
+        padding: 0.3rem;
+        margin: 0.6rem;
+        border: 0.1rem solid black;
+        border-radius: 0.5rem;
+    }
+
+    .feed {
+        margin: 1.5rem;
+    }
+
+    .feed-1 {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .feed-1 li {
+        list-style-type: none;
+        font-size: 1rem;
+    }
+
+    .feed-3 {
+        margin-top: 0.8rem;
+    }
+
+    .feed-2 {
+        height: 15rem;
+        width: 100%;
+        margin-top: 0.8rem;
+
+    }
+
+    .feed-2 img {
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5rem;
+    }
+
+    .feedpost {
+        margin-top: 1rem;
+        border-top: 0.1rem solid black;
+        padding-top: 1.5rem;
+    }
+
+    .nonconnections {
+        margin: 1.5rem;
+    }
+
+    .nonconnections-1 {
+        display: flex;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+
+    }
+
+    .nonconnection-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border: 0.1rem solid black;
+        border-radius: 0.6rem;
+        margin-left: 1rem;
+        border-top: 0.1rem solid black;
+    }
+
+    .nonconnection-2 li {
+        list-style-type: none;
+    }
+
+    .mobile-navbar {
+        display: none;
+    }
+
+    @media(max-width:772px) {
+        nav .navbar .welcome {
+            display: none;
+        }
+
+        nav .navbar .logo i {
+            display: block;
+        }
+
+        .mobile-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem;
+
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .body .userpost {
+            width: 100%;
+        }
+
+        .body .userpost .post .userinput form {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+        }
+
+    }
+</style>
+
+<body>
+
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-bars" id="menubars" onclick="togglefunction()" onmouseleave="removetoggle()"></i>
+                <img src="logo.png" alt="">
+            </div>
+            <div class="welcome">
+                <ul>
+                    <a href="/">
+                        <li>home</li>
+                    </a>
+                    <a href="/searchpdf">
+                        <li>searchnotes</li>
+                    </a>
+                    <a href="/upload">
+                        <li>uploadnotes</li>
+                    </a>
+                </ul>
+            </div>
+            <div class="welcome">
+                <ul>
+                    <a href="">
+                        <li><img id="imgk" src="signin-image.jpg" alt=""></li>
+                    </a>
+                    <a href="/v2/{{username}}">
+                        <li>{{username}}</li>
+                    </a>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="body">
+        <div class="userpost">
+            <div class="post">
+                <div class="userimage">
+                    <img id="img" src="signin-image.jpg" alt="">
+                </div>
+                <div class="userinput">
+                    <form action="/v1/post" method="post" enctype="multipart/form-data">
+                        <textarea name="text" id="" cols="30" rows="1" placeholder="post your doubt"
+                            required></textarea>
+                        <input type="file" name="image" accept="image/*" required>
+                        <button type="submit">post</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="nonconnections">
+                <div class="nonconnections-1">
+                    {{#each nonConnectedUsers}}
+
+                    <div class="nonconnection-2">
+                        <img id="imgk1" src="signin-image.jpg" alt="">
+                        <li>
+                            <a href="/v1/{{username}}">
+                                <p>{{username}}</p>
+                            </a>
+                        </li>
+                        {{!-- <a href="/v1/connect">
+                            <li>connect</li>
+                        </a> --}}
+                        <button class="connect-button pending" data-userid="{{_id}}">Connect</button>
+
+
+                    </div>
+
+                    {{/each}}
+                </div>
+
+            </div>
+
+            <div class="feed">
+                {{#each combinedFeed}}
+
+                <div class="feedpost">
+                    <div class="feed-1">
+
+                        <div class="feed-user">
+                            <img id="imgk" src="signin-image.jpg" alt="">
+                        </div>
+                        <div class="feed-username">
+                            {{#ifEqual author._id user._id}}
+                            <a href="/v2/{{author.username}}">
+                                <li>{{author.username}}</li>
+                            </a>
+                            {{else}}
+                            <a href="/v1/{{author.username}}">
+                                <li>{{author.username}}</li>
+                            </a>
+                            {{/ifEqual}}
+                            <li>{{timeago createdAt}}</li>
+                        </div>
+
+                    </div>
+                    <div class="feed-3">
+                        <p>{{text}}</p>
+                    </div>
+                    <div class="feed-2">
+                        <img src="{{image}}" alt="">
+                    </div>
+
+                </div>
+                {{/each}}
+            </div>
+
+        </div>
+        <div class="brainbulbthings">
+
+        </div>
+    </div>
+    <div class="mobile-navbar">
+        <a href="/" class="nav-item"><i class="fa-solid fa-house"></i></a>
+        <a href="/searchpdf" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="/upload" class="nav-item"><i class="fa-solid fa-file-arrow-up"></i></a>
+        <a href="/v2/{{username}}" class="nav-item"><i class="fa-solid fa-user"></i></a>
+    </div>
+
+</body>
+
+</html>
