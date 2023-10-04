@@ -102,6 +102,7 @@ app.get("/", checkAuth, async (req, res) => {
       _id: {
         $nin: excludedUserIds,
       },
+       isVerified: true,
     });
     
     const combinedFeed = [...feedPosts, ...userPosts].map((post) => ({
