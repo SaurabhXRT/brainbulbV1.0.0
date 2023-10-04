@@ -34,10 +34,11 @@ router.post("/checkuser", async (req, res) => {
     const { username, mobileNumber } = req.body;
 
     // Check if a user with the given username exists
-    const userByUsername = await User.findOne({ username });
+   const userByUsername = await User.findOne({ username,  isVerified: true });
 
     // Check if a user with the given mobile number exists
-    const userByMobileNumber = await User.findOne({ mobileNumber });
+    const userByMobileNumber = await User.findOne({ mobileNumber, isVerified: true });
+
 
     if (userByUsername && userByMobileNumber) {
       // Both username and mobile number exist
