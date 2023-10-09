@@ -1,6 +1,6 @@
-# NoteShare - Connect, Share, Learn
+# Brainbulb - Connect, Share, Learn
 
-**NoteShare** is a dynamic and collaborative social media platform designed for students, educators, and anyone passionate about learning. It facilitates the sharing of educational content, doubts, and resources while fostering a supportive community of learners. Built using a stack of modern technologies, this platform is feature-rich and secure.
+**Brainbulb** is a dynamic and collaborative social media platform designed for students, educators, and anyone passionate about learning. It facilitates the sharing of educational content, doubts, and resources while fostering a supportive community of learners. Built using a stack of modern technologies, this platform is feature-rich and secure.
 
 ## Key Features
 
@@ -14,7 +14,7 @@
    - They can connect with other users and view their profiles.
    - **Cookies** are used to maintain user sessions for seamless navigation.
 
-3. **Note Sharing**
+3. **Notes Sharing**
    - Users can create and share notes, doubts, or educational content with text, images, or documents.
    - Integrated with **Google Drive** to store and manage documents securely.
    - Images are hosted on **Cloudinary** to ensure fast loading and responsiveness.
@@ -47,9 +47,9 @@
 
 ## Benefits
 
-- **Educational Collaboration**: NoteShare encourages a community of learners to collaborate, share knowledge, and support each other.
+- **Educational Collaboration**: Brainbulb encourages a community of learners to collaborate, share knowledge, and support each other.
 - **Secure and User-Friendly**: Robust security measures ensure user data protection, and a user-friendly interface makes it accessible to all.
 - **Resourceful**: With document and image storage integrated, the platform is a one-stop solution for educational resources.
 - **Mobile-Friendly**: The mobile OTP-based authentication ensures accessibility on all devices.
 
-**NoteShare** is not just a platform; it's a vibrant online community where learners come together to grow, share, and inspire.
+**Brainbulb** is not just a platform; it's a vibrant online community where learners come together to grow, share, and inspire.
