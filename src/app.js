@@ -111,7 +111,7 @@ app.get("/", checkAuth, async (req, res) => {
     }));
     combinedFeed.sort((a, b) => b.createdAt - a.createdAt);
 
-    res.render("dashboard", {
+    res.render("home", {
       user,
       combinedFeed,
       nonConnectedUsers,
