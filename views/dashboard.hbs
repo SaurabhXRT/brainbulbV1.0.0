@@ -366,29 +366,7 @@ button {
 
             </div>
 
-            <div class="nonconnections">
-                <div class="nonconnections-1">
-                    {{#each nonConnectedUsers}}
 
-                    <div class="nonconnection-2">
-                        <img id="imgk1" src="signin-image.jpg" alt="">
-                        <li>
-                            <a href="/v1/{{username}}">
-                                <p>{{username}}</p>
-                            </a>
-                        </li>
-                        {{!-- <a href="/v1/connect">
-                            <li>connect</li>
-                        </a> --}}
-                        <button class="connect-button pending" data-userid="{{_id}}">Connect</button>
-
-
-                    </div>
-
-                    {{/each}}
-                </div>
-
-            </div>
 
             <div class="feed">
                 {{#each combinedFeed}}
