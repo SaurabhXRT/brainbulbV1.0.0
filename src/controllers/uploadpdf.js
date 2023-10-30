@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const { google } = require("googleapis");
 const drive = google.drive("v3");
 const auth = new google.auth.GoogleAuth({
-  keyFile: "../key.json",
+  keyFile: "key.json",
   scopes: ["https://www.googleapis.com/auth/drive"],
 });
 
