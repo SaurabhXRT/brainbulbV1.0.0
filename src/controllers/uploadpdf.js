@@ -11,7 +11,7 @@ const streamifier = require("streamifier");
 app.use(express.json());
 router.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
