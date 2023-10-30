@@ -5,15 +5,15 @@ const File = require("../model/Upload");
 const jwt = require("jsonwebtoken");
 const checkAuth = require("../middleware/checkauth");
 const router = express.Router();
-// const fileUpload = require("express-fileupload");
-// app.use(fileUpload());
+const fileUpload = require("express-fileupload");
+app.use(fileUpload());
 const streamifier = require("streamifier");
 app.use(express.json());
 router.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+// const multer = require("multer");
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage });
 
 const { google } = require("googleapis");
 const drive = google.drive("v3");
@@ -28,7 +28,7 @@ const driveClient = async () => {
   return drive;
 };
 
-router.post("/upload", upload.single("pdf"), checkAuth, async (req, res) => {
+router.post("/upload", checkAuth, async (req, res) => {
   try {
     const decodedToken = jwt.decode(req.cookies.token);
     if (!decodedToken) {
@@ -45,23 +45,23 @@ router.post("/upload", upload.single("pdf"), checkAuth, async (req, res) => {
       return res.status(400).send("No file uploaded.");
     }
     const drive = await driveClient();
-   // const uploadedFile = req.files.pdf;
+    const uploadedFile = req.files.pdf;
     
     console.log(uploadedFile);
     const fileMetadata = {
-      name: req.file.originalname,
+      name: uploadedFile.name,
     };
 
-    // const media = {
-    //   mimeType: uploadedFile.type,
-    //   body: streamifier.createReadStream(uploadedFile.data),
-    // };
-
-    const fileStream = streamifier.createReadStream(req.file.buffer);
     const media = {
-      mimeType: "application/pdf",
-      body: fileStream,
+      mimeType: uploadedFile.type,
+      body: streamifier.createReadStream(uploadedFile.data),
     };
+
+    // const fileStream = streamifier.createReadStream(req.file.buffer);
+    // const media = {
+    //   mimeType: "application/pdf",
+    //   body: fileStream,
+    // };
 
 
     
@@ -84,7 +84,7 @@ router.post("/upload", upload.single("pdf"), checkAuth, async (req, res) => {
 
     const file = new File({
       subjectname: req.body.subjectname,
-      filename: req.file.originalname,
+      filename: uploadedFile.name,
       pdf: response.data.webViewLink,
       uploadedBy: user._id,
     });
@@ -97,7 +97,7 @@ router.post("/upload", upload.single("pdf"), checkAuth, async (req, res) => {
     res.status(500).json({ success: false, message: "Error uploading file" });
   }
 });
-// Other routes and middleware...
+
 
 router.get("/search", async (req, res) => {
   try {
