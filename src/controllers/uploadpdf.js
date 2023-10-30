@@ -5,12 +5,15 @@ const File = require("../model/Upload");
 const jwt = require("jsonwebtoken");
 const checkAuth = require("../middleware/checkauth");
 const router = express.Router();
-const fileUpload = require("express-fileupload");
-app.use(fileUpload());
+// const fileUpload = require("express-fileupload");
+// app.use(fileUpload());
 const streamifier = require("streamifier");
 app.use(express.json());
 router.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const { google } = require("googleapis");
 const drive = google.drive("v3");
@@ -25,7 +28,7 @@ const driveClient = async () => {
   return drive;
 };
 
-router.post("/upload", checkAuth, async (req, res) => {
+router.post("/upload", upload.single("pdf"), checkAuth, async (req, res) => {
   try {
     const decodedToken = jwt.decode(req.cookies.token);
     if (!decodedToken) {
@@ -41,19 +44,27 @@ router.post("/upload", checkAuth, async (req, res) => {
     if (!req.files || !req.files.pdf) {
       return res.status(400).send("No file uploaded.");
     }
-
-    const uploadedFile = req.files.pdf;
+    const drive = await driveClient();
+   // const uploadedFile = req.files.pdf;
+    
     console.log(uploadedFile);
     const fileMetadata = {
-      name: uploadedFile.name,
+      name: req.file.originalname,
     };
 
+    // const media = {
+    //   mimeType: uploadedFile.type,
+    //   body: streamifier.createReadStream(uploadedFile.data),
+    // };
+
+    const fileStream = streamifier.createReadStream(req.file.buffer);
     const media = {
-      mimeType: uploadedFile.type,
-      body: streamifier.createReadStream(uploadedFile.data),
+      mimeType: "application/pdf",
+      body: fileStream,
     };
 
-    const drive = await driveClient();
+
+    
 
     const response = await drive.files.create({
       resource: fileMetadata,
@@ -73,7 +84,7 @@ router.post("/upload", checkAuth, async (req, res) => {
 
     const file = new File({
       subjectname: req.body.subjectname,
-      filename: uploadedFile.name,
+      filename: req.file.originalname,
       pdf: response.data.webViewLink,
       uploadedBy: user._id,
     });
