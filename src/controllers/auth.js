@@ -153,6 +153,8 @@ router.post("/signin", async (req, res) => {
         })
       );
       res.redirect("/");
+    } else {
+      res.send("wrong password");
     }
   } catch (err) {
     console.log(err);
