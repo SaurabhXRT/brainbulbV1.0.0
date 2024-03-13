@@ -32,25 +32,17 @@ const checkAuth = require("../middleware/checkauth");
 router.post("/checkuser", async (req, res) => {
   try {
     const { username, mobileNumber } = req.body;
-
-    // Check if a user with the given username exists
-   const userByUsername = await User.findOne({ username,  isVerified: true });
-
-    // Check if a user with the given mobile number exists
+    const userByUsername = await User.findOne({ username,  isVerified: true });
     const userByMobileNumber = await User.findOne({ mobileNumber, isVerified: true });
 
 
     if (userByUsername && userByMobileNumber) {
-      // Both username and mobile number exist
       return res.json({ userExists: true, message: "User already exists with this username and mobile number." });
     } else if (userByUsername) {
-      // Username exists
       return res.json({ userExists: true, message: "User already exists with this username." });
     } else if (userByMobileNumber) {
-      // Mobile number exists
       return res.json({ userExists: true, message: "User already exists with this mobile number." });
     } else {
-      // User doesn't exist
       return res.json({ userExists: false });
     }
   } catch (error) {
@@ -62,20 +54,15 @@ router.post("/checkuser", async (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const { username, mobileNumber, password } = req.body;
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Create a new user
     const user = new User({
       username,
       mobileNumber,
       password: hashedPassword,
     });
-
     await user.save();
     console.log("user saved");
-
     res.status(201).json({ message: "User created. Please verify OTP." });
-    // res.render("verifyotp", {mobileNumber: user.mobileNumber});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -96,16 +83,11 @@ router.post("/verifyotp", async (req, res) => {
         .status(400)
         .json({ error: "Mobile number is missing in the request body" });
     }
-
-    // Remove non-numeric characters and ensure it starts with "+"
     let formattedMobileNumber = mobileNumber.replace(/\D/g, "");
     if (!formattedMobileNumber.startsWith("+")) {
       formattedMobileNumber = `+${formattedMobileNumber}`;
     }
-
     console.log(formattedMobileNumber);
-
-    // Now you can proceed with the rest of your code
     const user = await User.findOne({ mobileNumber: formattedMobileNumber });
     user.isVerified = true;
     await user.save();
