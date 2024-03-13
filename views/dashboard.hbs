@@ -278,31 +278,22 @@ button {
     </style>
 <script>
     $(document).ready(function () {
-        // Handle the click event of the "Connect" button
         $(".connect-button").click(function () {
-            const button = $(this); // Store a reference to the button element
+            const button = $(this); 
             const userId = button.data("userid");
-
-            // Check if the button is disabled (prevents multiple clicks)
             if (button.prop("disabled")) {
                 return;
             }
-
-            // Send an AJAX request to initiate the connection request
             $.ajax({
                 url: "/v1/connect",
                 type: "POST",
                 data: { userId },
                 success: function (response) {
-                    // Handle the success response
                     alert(response.message);
-
-                    // Update the button text to "Pending" and disable the button
                     button.text("Pending");
                     button.prop("disabled", true);
                 },
                 error: function (error) {
-                    // Handle any errors that occur during the AJAX request
                     console.error(error);
                     alert("Error connecting to the user.");
                 },
