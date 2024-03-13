@@ -164,22 +164,14 @@
 
 
         firebase.initializeApp(firebaseConfig);
-
         const appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container");
-
-        // Handle OTP verification form submission
         $("#otp-verification-form").submit(function (e) {
             e.preventDefault();
-
             const otp = $("input[name='otp']").val();
-
-            // Use Firebase to verify OTP
             const verificationId = $("input[name='verificationid']").val();
             const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, otp);
-
             firebase.auth().signInWithCredential(credential)
                 .then(userCredential => {
-                    // OTP is verified successfully
                     alert("OTP verified successfully!");
                     submitFormData();
                 })
@@ -189,20 +181,14 @@
                 });
 
         });
-
-        // Function to submit form data
         function submitFormData() {
             const mobileNumber = $("input[name='mobileNumber']").val();
-
-
             $.ajax({
                 type: "POST",
                 url: "/auth/verifyotp",
                 data: JSON.stringify({ mobileNumber: mobileNumber }),
                 contentType: "application/json",
                 success: function (response) {
-                    //alert("mobile number updated");
-                    // Redirect to the verify OTP page
                     window.location.href = `/`;
                 },
                 error: function (error) {
