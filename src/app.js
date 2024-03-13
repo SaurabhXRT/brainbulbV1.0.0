@@ -75,29 +75,14 @@ app.get("/", checkAuth, async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found.");
     }
-
-    // 1. Retrieve posts from user's connections
-    const connectedUsers = user.connections; // Assuming this contains user IDs
+    const connectedUsers = user.connections; 
     const feedPosts = await Post.find({ author: { $in: connectedUsers } })
-      .sort({ createdAt: -1 }) // Sort by most recent posts first
+      .sort({ createdAt: -1 }) 
       .populate("author");
-
-    // 2. Retrieve the user's own posts
     const userPosts = await Post.find({ author: user._id })
-      .sort({ createdAt: -1 }) // Sort by most recent posts first
+      .sort({ createdAt: -1 }) 
       .populate("author");
-
-    // 3. Retrieve users who are not connected to the current user
-    // const nonConnectedUsers = await User.find({
-    //     _id: {
-    //       $nin: connectedUsers.concat(user._id), // Exclude connected users and current user
-    //     },
-    //     _id: {
-    //       $nin: user.pendingConnections, // Exclude users with pending connection requests
-    //     },
-    //   });
     const excludedUserIds = connectedUsers.concat(user._id, user.pendingConnections, user.sentConnections);
-
     const nonConnectedUsers = await User.find({
       _id: {
         $nin: excludedUserIds,
@@ -110,7 +95,6 @@ app.get("/", checkAuth, async (req, res) => {
       user: { _id: user._id }, // Add user._id to each post
     }));
     combinedFeed.sort((a, b) => b.createdAt - a.createdAt);
-
     res.render("home", {
       user,
       combinedFeed,
