@@ -164,24 +164,19 @@
         };
 
         firebase.initializeApp(firebaseConfig);
-
         $("#signup-form").submit(function (e) {
             e.preventDefault();
             const username = $("input[name='username']").val();
             const mobileNumber = $("input[name='mobileNumber']").val();
-
-            // Check if the user already exists in the database
             $.ajax({
                 type: "POST",
-                url: "/auth/checkuser", // Create a route for checking user existence
+                url: "/auth/checkuser", 
                 data: JSON.stringify({ username, mobileNumber }),
                 contentType: "application/json",
                 success: function (response) {
                     if (response.userExists) {
-                        // User already exists
                        alert(response.message);
                     } else {
-                        // User doesn't exist, send OTP
                         sendOTP();
                     }
                 },
@@ -194,19 +189,13 @@
 
 
         function sendOTP() {
-
             const mobileNumber = $("input[name='mobileNumber']").val();
-
-            // Use Firebase or any other service to send the OTP to the user's mobileNumber
-            // Example using Firebase (you need to initialize it before this)
             const appVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container");
             firebase.auth().signInWithPhoneNumber(mobileNumber, appVerifier)
                 .then(confirmationResult => {
                     window.confirmationResult = confirmationResult;
                     verificationId = confirmationResult.verificationId;
                     alert("OTP sent successfully!");
-
-                    // After OTP is sent, submit the form data
                     submitFormData();
                 })
                 .catch(error => {
@@ -215,22 +204,17 @@
                 });
 
         };
-
-        // Function to submit form data
         function submitFormData() {
             const formData = $("#signup-form").serializeArray().reduce(function (obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-
             $.ajax({
                 type: "POST",
                 url: "/auth/signup",
                 data: JSON.stringify(formData),
                 contentType: "application/json",
                 success: function (response) {
-                   // alert("User data saved successfully!");
-                    // Redirect to the verify OTP page
                     window.location.href = `/auth/verifyotp?mobileNumber=${formData.mobileNumber}&verificationId=${verificationId}`;
                 },
                 error: function (error) {
