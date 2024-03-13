@@ -309,24 +309,17 @@
 </style>
 <script>
     $(document).ready(function () {
-        // Handle the click event of the "Accept" button
         $(".accept-button").click(function () {
-            const button = $(this); // Store a reference to the button element
+            const button = $(this); 
             const userId = button.data("userid");
-
-            // Send an AJAX request to accept the connection request
             $.ajax({
                 url: `/v2/accept/${userId}`,
                 type: "POST",
                 success: function (response) {
-                    // Handle the success response, e.g., display a message to the user
                     alert(response.message);
-
-                    // Optionally, you can remove or hide the accepted user's section from the page
                     button.closest(".connecteduser-1").remove();
                 },
                 error: function (error) {
-                    // Handle any errors that occur during the AJAX request
                     console.error(error);
                     alert("Error accepting the connection.");
                 },
@@ -340,21 +333,14 @@
         const connectedUserSection = document.querySelector(".connecteduser");
         const pendingConnectionSection = document.querySelector(".pending");
         const postSection = document.querySelector(".feed");
-
-        // Initial setup: Hide the connections and pending request sections
         connectedUserSection.style.display = "none";
         pendingConnectionSection.style.display = "none";
-
         buttons.forEach((button) => {
             button.addEventListener("click", function () {
                 const buttonClicked = this.textContent.toLowerCase();
-
-                // Hide all sections
                 connectedUserSection.style.display = "none";
                 pendingConnectionSection.style.display = "none";
                 postSection.style.display = "none";
-
-                // Display the selected section
                 if (buttonClicked === "{{connectedUsers.length}}connections") {
                     connectedUserSection.style.display = "block";
                 } else if (buttonClicked === "{{pendingConnectionUsers.length}}pending request") {
