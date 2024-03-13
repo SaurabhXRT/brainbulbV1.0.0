@@ -71,15 +71,11 @@ router.post("/connect", checkAuth, async (req, res) => {
     const currentUser = await User.findOne({ username });
     const userIdToConnect = req.body.userId; // The ID of the user to connect with
     //const currentUser = req.user;
-
-    // Check if the user to connect with exists
     const userToConnect = await User.findById(userIdToConnect);
 
     if (!userToConnect) {
       return res.status(404).json({ message: "User not found." });
     }
-
-    // Check if the users are already connected
     if (currentUser.connections.includes(userIdToConnect)) {
       return res.status(400).json({ message: "Already connected." });
     }
@@ -88,56 +84,39 @@ router.post("/connect", checkAuth, async (req, res) => {
         .status(400)
         .json({ message: "Already in pending connection." });
     }
-
-    // Add the user to connect with to the pending connections list
     currentUser.sentConnections.push(userIdToConnect);
     await currentUser.save();
     userToConnect.pendingConnections.push(currentUser._id);
-
     await userToConnect.save();
-
     res.json({ message: "Connection request sent." });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error connecting to the user." });
   }
 });
-
 router.get("/:username", checkAuth, async (req, res) => {
   try {
     const decodedToken = jwt.decode(req.cookies.token);
     if (!decodedToken) {
       return res.status(401).send("Unauthorized");
     }
-
     const currentUsername = decodedToken.username;
     const otherUsername = req.params.username;
-
-    // Find the current user
     const currentUser = await User.findOne({ username: currentUsername });
-
     if (!currentUser) {
       return res.status(404).send("Current user not found.");
     }
-
-    // Find the other user by username
     const otherUser = await User.findOne({ username: otherUsername })
-      .populate("connections") // Populate the connected users
-      .populate("pendingConnections"); // Populate the pending connection requests
-
+      .populate("connections") 
+      .populate("pendingConnections"); 
     if (!otherUser) {
       return res.status(404).json({ message: "Other user not found." });
     }
-
-    // Find the other user's posts
     const otherUserPosts = await Post.find({ author: otherUser._id })
-      .sort({ createdAt: -1 }) // Sort by most recent posts first
+      .sort({ createdAt: -1 }) 
       .populate("author");
-
-    // Calculate the total number of connections and pending connection requests of the other user
     const otherUserConnections = otherUser.connections;
     const otherUserConnectionStatus = otherUserConnections.map((connectionId) => {
-   
       const currentuserisConnected = connectionId.equals(currentUser._id);
       return {
         userId: connectionId,
@@ -146,20 +125,14 @@ router.get("/:username", checkAuth, async (req, res) => {
     });
     
     // const otherUserPendingConnections = otherUser.pendingConnections;
-
-    // Check if the current user is connected to the other user
     //const isConnected = otherUserConnections.includes(currentUser._id);
     //const isConnected = otherUserConnections.some(id => id.toString() === currentUser._id.toString());
     const isConnected = otherUserConnections.some((id) =>
       id.equals(currentUser._id)
     );
-
-    // Check if the current user has a pending connection request from the other user
     const hasPendingRequest = currentUser.pendingConnections.some((id) =>
       id.equals(otherUser._id)
     );
-
-    // Check if the current user has sent a connection request to the other user
     const hasSentConnectionRequest = currentUser.sentConnections.some((id) =>
       id.equals(otherUser._id)
     );
